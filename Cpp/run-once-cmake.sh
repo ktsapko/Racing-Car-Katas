@@ -5,4 +5,9 @@ if [[ ! -d cmake-build-script ]]; then
 fi
 
 cd cmake-build-script
-cmake .. -DCMAKE_BUILD_TYPE=DEBUG && cmake --build . && cmake --build . --target test
+
+cmake .. \
+    -DCMAKE_BUILD_TYPE=DEBUG \
+    -DUSE_CATCH2=OFF \
+&& cmake --build . \
+&& cmake --build . --target test
