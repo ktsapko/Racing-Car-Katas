@@ -4,7 +4,7 @@
 namespace {
   TEST(Alarm, Foo) {
         auto converter = new HtmlPagesConverter("foo");
-        ASSERT_EQ("fixme", converter->getFilename());
+        ASSERT_EQ("foo", converter->getFilename());
   }
 }
 

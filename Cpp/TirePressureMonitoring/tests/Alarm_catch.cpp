@@ -1,6 +1,8 @@
-#define CATCH_CONFIG_MAIN
-#include "catch2/catch.hpp"
+#include <gtest/gtest.h>
 
-TEST_CASE("Alarm TBD", "[TirePressureMonitoring]") {
-  REQUIRE(true);
+TEST(Alarm, InitiallyOff)
+{
+    Alarm alarm;
+
+    EXPECT_FALSE(alarm.isAlarmOn());
 }
