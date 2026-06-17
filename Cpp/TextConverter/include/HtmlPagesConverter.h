@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+
 class HtmlPagesConverter 
 {
     std::string m_filename;

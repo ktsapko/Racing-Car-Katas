@@ -1,24 +1,21 @@
 
 #include "../include/HtmlTextConverter.h"
-#include "../include/StringEscapeUtils.h"
-#include <iostream>
+#include "../include/FileReader.h"
+#include "StringEscapeUtils.h"
 
-HtmlTextConverter::HtmlTextConverter(std::string const& fullFilenameWithPath) : m_fullFilenameWithPath(fullFilenameWithPath)
-{}
-
-std::string HtmlTextConverter::convertToHtml() 
+HtmlTextConverter::HtmlTextConverter(std::string const &fullFilenameWithPath) : m_fullFilenameWithPath(fullFilenameWithPath)
 {
-    std::ifstream reader;
-    std::cout << "File: [" << m_fullFilenameWithPath << "]\n";
-    reader.open(m_fullFilenameWithPath);
-    if (!reader.is_open())
-    {
-        throw std::runtime_error("Could not open file: " + m_fullFilenameWithPath);
-    }
+}
 
-    std::string line;
+std::string HtmlTextConverter::convertToHtml()
+{
+    FileReader fileReader(m_fullFilenameWithPath);
+
+    auto lines = fileReader.readLines();
+
     std::string html;
-    while (std::getline(reader,line))
+
+    for (const auto &line : lines)
     {
         html += StringEscapeUtils::escapeHtml(line);
         html += "<br />";
@@ -26,7 +23,7 @@ std::string HtmlTextConverter::convertToHtml()
     return html;
 }
 
-std::string HtmlTextConverter::getFilename() 
+std::string HtmlTextConverter::getFilename()
 {
     return m_fullFilenameWithPath;
 }

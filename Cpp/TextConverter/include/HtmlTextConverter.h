@@ -6,8 +6,8 @@ class HtmlTextConverter
 {
     std::string m_fullFilenameWithPath;
 
-public: 
-    HtmlTextConverter(std::string const& fullFilenameWithPath);
+public:
+    HtmlTextConverter(std::string const &fullFilenameWithPath);
 
     std::string convertToHtml();
 
