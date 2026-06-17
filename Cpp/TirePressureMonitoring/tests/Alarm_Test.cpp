@@ -6,49 +6,49 @@
 class FakeSensor : public ISensor
 {
 public:
-    explicit FakeSensor(double value)
-        : m_value(value)
-    {
-    }
+  explicit FakeSensor(double value)
+      : m_value(value)
+  {
+  }
 
-    double popNextPressurePsiValue() override
-    {
-        return m_value;
-    }
+  double popNextPressurePsiValue() override
+  {
+    return m_value;
+  }
 
 private:
-    double m_value;
+  double m_value;
 };
 
 TEST(Alarm, TurnsOnWhenPressureTooLow)
 {
-    FakeSensor sensor(16.0);
+  FakeSensor sensor(16.0);
 
-    Alarm alarm(sensor);
+  Alarm alarm(sensor);
 
-    alarm.check();
+  alarm.check();
 
-    EXPECT_TRUE(alarm.isAlarmOn());
+  EXPECT_TRUE(alarm.isAlarmOn());
 }
 
 TEST(Alarm, TurnsOnWhenPressureTooHigh)
 {
-    FakeSensor sensor(22.0);
+  FakeSensor sensor(22.0);
 
-    Alarm alarm(sensor);
+  Alarm alarm(sensor);
 
-    alarm.check();
+  alarm.check();
 
-    EXPECT_TRUE(alarm.isAlarmOn());
+  EXPECT_TRUE(alarm.isAlarmOn());
 }
 
 TEST(Alarm, StaysOffWhenPressureIsNormal)
 {
-    FakeSensor sensor(19.0);
+  FakeSensor sensor(19.0);
 
-    Alarm alarm(sensor);
+  Alarm alarm(sensor);
 
-    alarm.check();
+  alarm.check();
 
-    EXPECT_FALSE(alarm.isAlarmOn());
+  EXPECT_FALSE(alarm.isAlarmOn());
 }
