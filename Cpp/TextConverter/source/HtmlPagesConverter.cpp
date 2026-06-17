@@ -1,49 +1,49 @@
 
 #include "../include/HtmlPagesConverter.h"
 #include "../include/StringEscapeUtils.h"
+#include "../include/FileReader.h"
 
 #include <sstream>
-#include <fstream>
 
-HtmlPagesConverter::HtmlPagesConverter(std::string const& filename) : m_filename(filename)
+HtmlPagesConverter::HtmlPagesConverter(std::string const &filename) : m_filename(filename)
 {
+    FileReader reader(m_filename);
+
+    auto lines = reader.readLines();
+
     m_breaks.push_back(0);
-    
-    std::ifstream reader(m_filename);
-    int cumulativeCharCount = 0;
-    std::string line;
-    while (std::getline(reader,line))
+
+    for (size_t i = 0; i < lines.size(); ++i)
     {
-        cumulativeCharCount += line.length() + 1; // add one for the newline
-        if (line.find("PAGE_BREAK") != std::string::npos) 
+        if (lines[i] == "PAGE_BREAK")
         {
-            int page_break_position = cumulativeCharCount;
-            m_breaks.push_back(page_break_position);
+            m_breaks.push_back(i + 1);
         }
     }
-    reader.close();
 }
 
 std::string HtmlPagesConverter::getHtmlPage(int page)
 {
-    std::ifstream reader(m_filename);
-    reader.seekg(m_breaks[page]);
+    FileReader reader(m_filename);
     std::ostringstream htmlPage;
     std::string line;
-    while (std::getline(reader,line))
+
+    auto lines = reader.readLines();
+
+    size_t start = m_breaks[page];
+
+    for (size_t i = start; i < lines.size(); ++i)
     {
-        if (line.find("PAGE_BREAK") != std::string::npos) 
-        {
+        if (lines[i] == "PAGE_BREAK")
             break;
-        }
-        htmlPage << StringEscapeUtils::escapeHtml(line);
+
+        htmlPage << StringEscapeUtils::escapeHtml(lines[i]);
         htmlPage << "<br />";
     }
-    reader.close();
     return htmlPage.str();
 }
 
-std::string HtmlPagesConverter::getFilename() 
+std::string HtmlPagesConverter::getFilename()
 {
     return m_filename;
 }

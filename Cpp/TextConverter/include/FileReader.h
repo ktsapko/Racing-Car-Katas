@@ -16,6 +16,9 @@ public:
     ~FileReader() = default;
 
     std::vector<std::string> readLines();
+    void seekg(std::streampos pos);
+    
 };
+
 
 #endif // FILE_READER_H
