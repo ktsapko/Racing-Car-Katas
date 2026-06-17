@@ -3,9 +3,9 @@
 
 TEST(HtmlTextConverter, ReturnsFilenamePassedToConstructor)
 {
-    HtmlTextConverter converter("foo");
+    HtmlTextConverter converter("test.txt");
 
-    EXPECT_EQ("foo", converter.getFilename());
+    EXPECT_EQ("test.txt", converter.getFilename());
 }
 
 TEST(HtmlTextConverter, ConvertsTextFileToHtml)
