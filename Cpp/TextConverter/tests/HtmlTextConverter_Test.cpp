@@ -1,16 +1,12 @@
 #include <gtest/gtest.h>
 #include "HtmlTextConverter.h"
-
-TEST(HtmlTextConverter, ReturnsFilenamePassedToConstructor)
-{
-    HtmlTextConverter converter("test.txt");
-
-    EXPECT_EQ("test.txt", converter.getFilename());
-}
+#include "FileReader.h"
 
 TEST(HtmlTextConverter, ConvertsTextFileToHtml)
 {
-    HtmlTextConverter converter("../../../TextConverter/tests/test.txt");
+    FileReader source("../../../TextConverter/tests/test.txt");
+
+    HtmlTextConverter converter(source);
 
     EXPECT_EQ(
         "Hello World<br />",
@@ -19,8 +15,9 @@ TEST(HtmlTextConverter, ConvertsTextFileToHtml)
 
 TEST(HtmlTextConverter, ConvertsTextFileWithMultipleLinesToHtml)
 {
-    HtmlTextConverter converter(
-    "../../../TextConverter/tests/test_multiple_lines.txt");
+    FileReader source("../../../TextConverter/tests/test_multiple_lines.txt");
+
+    HtmlTextConverter converter(source);
 
     EXPECT_EQ(
         "First Line<br />Second Line<br />Third Line<br />",
@@ -29,8 +26,9 @@ TEST(HtmlTextConverter, ConvertsTextFileWithMultipleLinesToHtml)
 
 TEST(HtmlTextConverter, ConvertsTextFileWithSpecialCharactersToHtml)
 {
-    HtmlTextConverter converter(
-    "../../../TextConverter/tests/test_special_characters.txt");
+    FileReader source("../../../TextConverter/tests/test_special_characters.txt");
+
+    HtmlTextConverter converter(source);
 
     EXPECT_EQ(
         "&amp;<br />*<br />#<br />",
@@ -39,7 +37,9 @@ TEST(HtmlTextConverter, ConvertsTextFileWithSpecialCharactersToHtml)
 
 TEST(HtmlTextConverter, ThrowsExceptionWhenFileDoesNotExist)
 {
-    HtmlTextConverter converter("non_existent_file.txt");
+    FileReader source("non_existent_file.txt");
+
+    HtmlTextConverter converter(source);
 
     EXPECT_THROW(
         converter.convertToHtml(),

@@ -1,24 +1,17 @@
-#ifndef FILE_READER_H
-#define FILE_READER_H
-
 #include <fstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include "IDataSource.h"
 
-class FileReader
+class FileReader : public IDataSource
 {
-private:
-    std::string m_fullFilenameWithPath;
-
 public:
-    explicit FileReader(std::string const &fileNameWithPath);
+    explicit FileReader(const std::string &fileNameWithPath);
     ~FileReader() = default;
 
-    std::vector<std::string> readLines();
-    void seekg(std::streampos pos);
-    
+    std::vector<std::string> readLines() override;
+
+private:
+    std::string m_fullFilenameWithPath;
 };
-
-
-#endif // FILE_READER_H

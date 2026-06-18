@@ -3,15 +3,13 @@
 #include "../include/FileReader.h"
 #include "StringEscapeUtils.h"
 
-HtmlTextConverter::HtmlTextConverter(std::string const &fullFilenameWithPath) : m_fullFilenameWithPath(fullFilenameWithPath)
+HtmlTextConverter::HtmlTextConverter(IDataSource &source) : m_source(source)
 {
 }
 
 std::string HtmlTextConverter::convertToHtml()
 {
-    FileReader fileReader(m_fullFilenameWithPath);
-
-    auto lines = fileReader.readLines();
+    auto lines = m_source.readLines();
 
     std::string html;
 
@@ -23,7 +21,7 @@ std::string HtmlTextConverter::convertToHtml()
     return html;
 }
 
-std::string HtmlTextConverter::getFilename()
-{
-    return m_fullFilenameWithPath;
-}
+// std::string HtmlTextConverter::getFilename()
+// {
+//     return m_fullFilenameWithPath;
+// }

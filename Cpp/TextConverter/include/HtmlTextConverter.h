@@ -1,15 +1,16 @@
-
+#pragma once
+#include "IDataSource.h"
 #include <string>
 #include <fstream>
 
 class HtmlTextConverter
 {
-    std::string m_fullFilenameWithPath;
 
 public:
-    HtmlTextConverter(std::string const &fullFilenameWithPath);
+    explicit HtmlTextConverter(IDataSource &source);
 
     std::string convertToHtml();
 
-    std::string getFilename();
+private:
+    IDataSource &m_source;
 };

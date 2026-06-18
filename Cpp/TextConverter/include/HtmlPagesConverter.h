@@ -1,17 +1,19 @@
-
+#pragma once
 #include <string>
 #include <vector>
+#include "IDataSource.h"
 
-
-class HtmlPagesConverter 
+class HtmlPagesConverter
 {
-    std::string m_filename;
     std::vector<int> m_breaks;
-    
- public:
-    HtmlPagesConverter(std::string const& filename);
+
+public:
+    explicit HtmlPagesConverter(IDataSource &source);
 
     std::string getHtmlPage(int page);
 
     std::string getFilename();
+
+private:
+    IDataSource &m_source;
 };

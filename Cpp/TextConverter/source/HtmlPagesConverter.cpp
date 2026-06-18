@@ -5,11 +5,11 @@
 
 #include <sstream>
 
-HtmlPagesConverter::HtmlPagesConverter(std::string const &filename) : m_filename(filename)
+HtmlPagesConverter::HtmlPagesConverter(IDataSource &source) : m_source(source)
 {
-    FileReader reader(m_filename);
+    // FileReader reader(m_filename);
 
-    auto lines = reader.readLines();
+    auto lines = m_source.readLines();
 
     m_breaks.push_back(0);
 
@@ -24,11 +24,9 @@ HtmlPagesConverter::HtmlPagesConverter(std::string const &filename) : m_filename
 
 std::string HtmlPagesConverter::getHtmlPage(int page)
 {
-    FileReader reader(m_filename);
     std::ostringstream htmlPage;
-    std::string line;
 
-    auto lines = reader.readLines();
+    auto lines = m_source.readLines();
 
     size_t start = m_breaks[page];
 
@@ -43,7 +41,3 @@ std::string HtmlPagesConverter::getHtmlPage(int page)
     return htmlPage.str();
 }
 
-std::string HtmlPagesConverter::getFilename()
-{
-    return m_filename;
-}
